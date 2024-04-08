@@ -1,0 +1,166 @@
+openapi: "3.0.2"
+info:
+  title: REST API
+  description: Rest API with GOLANG
+  version: "1.0.0"
+servers:
+  - url: https://5zd9cgfl-3000.asse.devtunnels.ms/api
+paths:
+  /categories:
+    get:
+      security:
+        - CategoryAuth: []
+      tags:
+        - "Category API"
+      summary: Get all categories
+      description: Get all categories
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  status:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Category"
+    post:
+      security:
+        - CategoryAuth: []
+      tags:
+        - "Category API"
+      summary: Create a new category
+      description: Create a new category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  status:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/Category"
+  /categories/{id}:
+    get:
+      security:
+        - CategoryAuth: []
+      tags:
+        - "Category API"
+      summary: Get a category by ID
+      description: Get a category by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  status:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/Category"
+    put:
+      security:
+        - CategoryAuth: []
+      tags:
+        - "Category API"
+      summary: Update a category by ID
+      description: Update a category by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  status:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/Category"
+    delete:
+      security:
+        - CategoryAuth: []
+      tags:
+        - "Category API"
+      summary: Delete a category by ID
+      description: Delete a category by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  status:
+                    type: string
+components:
+  securitySchemes:
+    CategoryAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API Key for Category API
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
